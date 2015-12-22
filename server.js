@@ -2,6 +2,9 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var meetupsController = require('./server/controllers/meetups-controller');
+var mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost:');
 
 app.use(bodyParser.urlencoded({
     extended: true
