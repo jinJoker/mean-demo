@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 var meetupsController = require('./server/controllers/meetups-controller');
 var mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost:');
+mongoose.connect('mongodb://localhost:27017/mean-demo');
 
 app.use(bodyParser.urlencoded({
     extended: true
@@ -17,8 +17,9 @@ app.get('/', function(req,res){
 
 app.use('/js', express.static(__dirname + '/client/js'));
 
+app.get('/api/meetups', meetupsController.list);
 app.post('/api/meetups', meetupsController.create);
 
-app.listen(3000, function(){
+app.listen(80, function(){
     console.log('I\'m listening');
 });

@@ -1,10 +1,11 @@
 app.controller("meetupsController", ['$scope', '$resource', function($scope, $resource){
         var Meetup = $resource('/api/meetups');
         
-        $scope.meetups = [
-            { name: "MEAN SF Developers" },
-            { name: "Some other meetups" }
-        ];
+        Meetup.query(function(results) {
+            $scope.meetups = results;
+        });
+        $scope.meetups = [];
+    
         $scope.createMeetup = function(){
             //old version: list will be refreshed by refreshing
             //$scope.meetups.push({name:$scope.meetupName});
@@ -12,7 +13,10 @@ app.controller("meetupsController", ['$scope', '$resource', function($scope, $re
             
             var meetup = new Meetup();
             meetup.name = $scope.meetupName;
-            meetup.$save();
+            meetup.$save(function(result){
+                $scope.meetups.push(result);
+                $scope.meetupName = '';
+            });
     }
 }]);
 
